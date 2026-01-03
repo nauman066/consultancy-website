@@ -61,7 +61,7 @@ export default function Home() {
 
 setSubmitStatus('submitting');
 try {
-  const response = await fetch('/api/enquiry', {
+const response = await fetch('https://consultancy-backend.onrender.com/api/enquiry', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData)
