@@ -57,40 +57,35 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
+   if (!validate()) return;
 
-    setSubmitStatus('submitting');
-    try {
-      const response = await fetch('/api/enquiry', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData)
-});
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+setSubmitStatus('submitting');
+try {
+  const response = await fetch('/api/enquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  });
+
+  if ( response.ok ) {
+    setSubmitStatus('success');
+    setTimeout(() => {
+      setFormData({ 
+        name: '', 
+        email: '', 
+        phone: '', 
+        advisory: "Policy Advisory Services to Government",
+        message: '' 
       });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setTimeout(() => {
-          setFormData({ 
-            name: '', 
-            email: '', 
-            phone: '', 
-            advisory: "Policy Advisory Services to Government",
-            message: '' 
-          });
-          setSubmitStatus('');
-          setShowForm(false);
-        }, 3000);
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (err) {
-      setSubmitStatus('error');
-    }
-  };
+      setSubmitStatus('');
+      setShowForm(false);
+    }, 3000);
+  } else {
+    setSubmitStatus('error');
+  }
+} catch (err) {
+  setSubmitStatus('error');
+}
 
   return (
     <>
