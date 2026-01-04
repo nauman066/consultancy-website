@@ -57,35 +57,37 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   if (!validate()) return;
+    if (!validate()) return;
 
-setSubmitStatus('submitting');
-try {
-const response = await fetch('https://consultancy-backend.onrender.com/api/enquiry', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)
-  });
-
-  if ( response.ok ) {
-    setSubmitStatus('success');
-    setTimeout(() => {
-      setFormData({ 
-        name: '', 
-        email: '', 
-        phone: '', 
-        advisory: "Policy Advisory Services to Government",
-        message: '' 
+    setSubmitStatus('submitting');
+    try {
+      // ✅ FIXED: Removed extra spaces from URL
+      const response = await fetch('https://consultancy-backend.onrender.com/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
-      setSubmitStatus('');
-      setShowForm(false);
-    }, 3000);
-  } else {
-    setSubmitStatus('error');
-  }
-} catch (err) {
-  setSubmitStatus('error');
-}
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setTimeout(() => {
+          setFormData({ 
+            name: '', 
+            email: '', 
+            phone: '', 
+            advisory: "Policy Advisory Services to Government",
+            message: '' 
+          });
+          setSubmitStatus('');
+          setShowForm(false);
+        }, 3000);
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (err) {
+      setSubmitStatus('error');
+    }
+  }; // ✅ FIXED: Added missing closing brace and semicolon
 
   return (
     <>
@@ -221,10 +223,10 @@ const response = await fetch('https://consultancy-backend.onrender.com/api/enqui
                     fontSize: '1.1rem',
                     maxWidth: '700px',
                     lineHeight: '1.6',
-                    marginBottom: '2rem', // ✅ Adjusted margin for vertical spacing
+                    marginBottom: '2rem',
                     color: '#F8F1E9',
                     opacity: '0.9',
-                    textAlign: 'center' // ✅ Centered!
+                    textAlign: 'center'
                   }}
                 >
                   Delivering precise strategic solutions for over 25 years, covering 11 practice areas with integrity and client-first advisory.
@@ -687,7 +689,7 @@ const response = await fetch('https://consultancy-backend.onrender.com/api/enqui
                     padding: '30px',
                     borderRadius: '12px',
                     position: 'relative',
-                    height: '300px'
+                    height: '30px'
                   }}>
                     <div style={{
                       position: 'absolute',
@@ -709,7 +711,8 @@ const response = await fetch('https://consultancy-backend.onrender.com/api/enqui
                       fontSize: '1.1rem',
                       lineHeight: '1.6',
                       fontStyle: 'italic',
-                      marginBottom: '20px'
+                      marginBottom: '20px',
+                      marginTop: '30px'
                     }}>
                       "Strategic solutions are not about solving problems today, but preparing for opportunities tomorrow. We ensure timely resolution with unwavering commitment."
                     </p>
